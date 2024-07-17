@@ -3,14 +3,14 @@
         $.ajax({
             method: 'POST',
             url: _config.api.invokeUrl,
-            data: {
+            data: JSON.stringify({
 	            Name: saveName,
 	            Mobile: saveMobile,
 	            Email: saveEmail
-            },
+            }),
             contentType: 'application/json',
             success: function saved(result){
-		        alert('Response received from API: '+ JSON.parse(result));
+		        alert('Response received from API: '+ result);
             },
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error('Error requesting: ', textStatus, ', Details: ', errorThrown);
