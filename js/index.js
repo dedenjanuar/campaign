@@ -30,10 +30,11 @@
         var email = $('#EmailInput').val();
         event.preventDefault();
 
-        if ( (name |= "") || (mobile |= "") ||  (email |= "")) {
-            saveUser(name, mobile, email);
-        } else {
+        if ( (name === "") || (mobile === "") ||  (email === "")) {
             alert('All fields required!!');
+        } else {
+	    saveUser(name, mobile, email);
+            
         }
     }
 }(jQuery));
