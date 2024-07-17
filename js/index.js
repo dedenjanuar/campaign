@@ -10,7 +10,7 @@
             }),
             contentType: 'application/json',
             success: function saved(result){
-		        alert('Response received from API: '+ result);
+		        alert('Response received from API: '+ JSON.stringify(result));
             },
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error('Error requesting: ', textStatus, ', Details: ', errorThrown);
