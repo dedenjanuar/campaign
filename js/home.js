@@ -15,8 +15,8 @@ Campaigns.map = Campaigns.map || {};
   if (!(_config.cognito.userPoolId &&
         _config.cognito.userPoolClientId &&
         _config.cognito.region)) {
-      $('#noCognitoMessage').show();
-      return;
+        $('#noCognitoMessage').show();
+        return;
   }
 
   userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
@@ -25,17 +25,17 @@ Campaigns.map = Campaigns.map || {};
       AWSCognito.config.region = _config.cognito.region;
   }
 
-  // var authToken;
-  // Campaigns.authToken.then(function setAuthToken(token) {
-  //     if (token) {
-  //         authToken = token;
-  //     } else {
-  //         window.location.href = '/';
-  //     }
-  // }).catch(function handleTokenError(error) {
-  //     alert(error);
-  //     window.location.href = '/';
-  // });
+  var authToken;
+  Campaigns.authToken.then(function setAuthToken(token) {
+      if (token) {
+          authToken = token;
+      } else {
+          window.location.href = '/';
+      }
+  }).catch(function handleTokenError(error) {
+      alert(error);
+      window.location.href = '/';
+  });
 
   $.ajax({
       method: 'GET',
@@ -64,15 +64,5 @@ Campaigns.map = Campaigns.map || {};
           console.error('Error requesting: ', textStatus, ', Details: ', errorThrown);
           console.error('Response: ', jqXHR.responseText);
       }
-  });
-
-  function signOut() {
-      // userPool.getCurrentUser().signOut();
-      window.location.href = '/';
-      event.preventDefault();
-  };
-
-  $(function onDocReady() {
-      $('#SignOut').click(signOut);
   });
 }(jQuery));

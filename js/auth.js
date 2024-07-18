@@ -83,7 +83,13 @@ var Campaigns = window.Campaigns || {};
 
     $(function onDocReady() {
         $('#signinForm').submit(handleSignin);
+        $('#SignOut').click(signOut);
     });
+
+    function signOut() {
+        userPool.getCurrentUser().signOut();
+        window.location.href = 'index.html';
+    };
 
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
