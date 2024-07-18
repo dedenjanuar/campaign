@@ -110,7 +110,7 @@ var Campaigns = window.Campaigns || {};
 
     $(function onDocReady() {
         $('#signinForm').submit(handleSignin);
-        $('#registrationForm').submit(handleRegister);
+        $('#SignOut').click(signOut);
         $('#verifyForm').submit(handleVerify);
     });
 
@@ -127,6 +127,10 @@ var Campaigns = window.Campaigns || {};
                 alert(err);
             }
         );
+    }
+
+    function signOut() {
+        userPool.getCurrentUser().signOut();
     }
 
     function handleRegister(event) {
