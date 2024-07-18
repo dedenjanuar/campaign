@@ -1,16 +1,16 @@
 (function ScopeWrapper($) {
-	function saveUser(saveName, saveMobile, saveEmail) {
+    function saveUser(saveName, saveMobile, saveEmail) {
         $.ajax({
             method: 'POST',
             url: _config.api.invokeUrl,
             data: JSON.stringify({
-	            Name: saveName,
-	            Mobile: saveMobile,
-	            Email: saveEmail
+                Name: saveName,
+                Mobile: saveMobile,
+                Email: saveEmail
             }),
             contentType: 'application/json',
             success: function saved(result){
-		        alert('Response received from API: '+ JSON.stringify(result));
+                alert('Response received from API: '+ JSON.stringify(result));
             },
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
                 console.error('Error requesting: ', textStatus, ', Details: ', errorThrown);
@@ -33,7 +33,7 @@
         if ( (name === "") || (mobile === "") ||  (email === "")) {
             alert('All fields required!!');
         } else {
-	    saveUser(name, mobile, email);
+        saveUser(name, mobile, email);
             
         }
     }

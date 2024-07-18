@@ -6,25 +6,43 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Login BackOffice</title>
+        <title>BackOffice</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/styled-table.css">
     </head>
     <body>
-        <div class="login">
-            <h1>Login BackOffice</h1>
-            <form id="signinForm">
-                <input type="text" id="emailInputSignin" placeholder="Username" required="required" />
-                <input type="password" id="passwordInputSignin" placeholder="Password" required="required" pattern=".*"  />
-                <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
-            </form>
+        <div class="topnav">
+          <a class="active" href="#home">Home</a>
+          <div class="login-container">
+            <a href="#" id="SignOut">Logout</a>
+          </div>
+        </div>
+        <div>
+            <h1> User Management </h1>
+        	<div class="container">
+              <table class="styled-table">
+                <thead>
+                  <tr>
+                    <th>UUID</th>
+                    <th>Name</th>
+                    <th>Mobile Number</th>
+                    <th>Email</th>
+                    <th>Created On</th>
+                  </tr>
+                </thead>
+                <tbody id="data">
+
+                </tbody>
+              </table>
+            </div>
         </div>
         <script src="js/vendor/jquery-3.1.0.js"></script>
         <script src="js/vendor/aws-cognito-sdk.min.js"></script>
         <script src="js/vendor/amazon-cognito-identity.min.js"></script>
         <script src="js/config.js"></script>
         <script src="js/auth.js"></script>
+        <script src="js/home.js"></script>
     </body>
 </html>

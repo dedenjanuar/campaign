@@ -1,0 +1,78 @@
+
+var Campaigns = window.Campaigns || {};
+Campaigns.map = Campaigns.map || {};
+
+(function scopeWrapper($) {
+  var signinUrl = '/';
+
+  var poolData = {
+      UserPoolId: _config.cognito.userPoolId,
+      ClientId: _config.cognito.userPoolClientId
+  };
+
+  var userPool;
+
+  if (!(_config.cognito.userPoolId &&
+        _config.cognito.userPoolClientId &&
+        _config.cognito.region)) {
+      $('#noCognitoMessage').show();
+      return;
+  }
+
+  userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+  if (typeof AWSCognito !== 'undefined') {
+      AWSCognito.config.region = _config.cognito.region;
+  }
+
+  // var authToken;
+  // Campaigns.authToken.then(function setAuthToken(token) {
+  //     if (token) {
+  //         authToken = token;
+  //     } else {
+  //         window.location.href = '/';
+  //     }
+  // }).catch(function handleTokenError(error) {
+  //     alert(error);
+  //     window.location.href = '/';
+  // });
+
+  $.ajax({
+      method: 'GET',
+      url: _config.api.invokeUrl,
+      headers: {
+        "Authorization": "XMLHttpRequest"
+      },
+      contentType: 'application/json',
+      success: function saved(result){
+        console.log(result.data);
+        if (result.data.length > 0) {
+
+          var temp = "";
+          result.data.forEach((itemData) => {
+            temp += "<tr>";
+            temp += "<td>" + itemData.UserId + "</td>";
+            temp += "<td>" + itemData.Name + "</td>";
+            temp += "<td>" + itemData.Mobile + "</td>";
+            temp += "<td>" + itemData.Email + "</td>";
+            temp += "<td>" + itemData.CreatedOn + "</td></tr>";
+          });
+          document.getElementById('data').innerHTML = temp;
+        }
+      },
+      error: function ajaxError(jqXHR, textStatus, errorThrown) {
+          console.error('Error requesting: ', textStatus, ', Details: ', errorThrown);
+          console.error('Response: ', jqXHR.responseText);
+      }
+  });
+
+  function signOut() {
+      // userPool.getCurrentUser().signOut();
+      window.location.href = '/';
+      event.preventDefault();
+  };
+
+  $(function onDocReady() {
+      $('#SignOut').click(signOut);
+  });
+}(jQuery));
