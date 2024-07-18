@@ -131,6 +131,7 @@ var Campaigns = window.Campaigns || {};
 
     function signOut() {
         userPool.getCurrentUser().signOut();
+        window.location.href = 'index.html';
     }
 
     function handleRegister(event) {

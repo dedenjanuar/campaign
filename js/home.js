@@ -4,6 +4,7 @@ Campaigns.map = Campaigns.map || {};
 
 (function scopeWrapper($) {
   var signinUrl = '/';
+  var authToken;
 
   var poolData = {
       UserPoolId: _config.cognito.userPoolId,
@@ -25,7 +26,6 @@ Campaigns.map = Campaigns.map || {};
       AWSCognito.config.region = _config.cognito.region;
   }
 
-  var authToken;
   Campaigns.authToken.then(function setAuthToken(token) {
       if (token) {
           authToken = token;
@@ -41,7 +41,7 @@ Campaigns.map = Campaigns.map || {};
       method: 'GET',
       url: _config.api.invokeUrl,
       headers: {
-        "Authorization": "XMLHttpRequest"
+        Authorization: authToken
       },
       contentType: 'application/json',
       success: function saved(result){
@@ -55,7 +55,7 @@ Campaigns.map = Campaigns.map || {};
             temp += "<td>" + itemData.Name + "</td>";
             temp += "<td>" + itemData.Mobile + "</td>";
             temp += "<td>" + itemData.Email + "</td>";
-            temp += "<td>" + itemData.CreatedOn + "</td></tr>";
+            temp += "<td>" + new Date(itemData.CreatedOn).toLocaleString() + "</td></tr>";
           });
           document.getElementById('data').innerHTML = temp;
         }
