@@ -3,7 +3,7 @@
 var Campaigns = window.Campaigns || {};
 
 (function scopeWrapper($) {
-    var signinUrl = '/signin.html';
+    var signinUrl = '/';
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -121,7 +121,7 @@ var Campaigns = window.Campaigns || {};
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
-                window.location.href = 'ride.html';
+                window.location.href = 'home.html';
             },
             function signinError(err) {
                 alert(err);
