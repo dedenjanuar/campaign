@@ -39,7 +39,7 @@ Campaigns.map = Campaigns.map || {};
 
   $.ajax({
       method: 'GET',
-      url: _config.api.invokeUrl,
+      url: _config.api.invokeUrl+'/users',
       headers: {
         Authorization: authToken
       },
