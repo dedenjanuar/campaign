@@ -29,6 +29,7 @@ Campaigns.map = Campaigns.map || {};
   Campaigns.authToken.then(function setAuthToken(token) {
       if (token) {
           authToken = token;
+          GetData(authToken);
       } else {
           window.location.href = '/';
       }
@@ -37,13 +38,13 @@ Campaigns.map = Campaigns.map || {};
       window.location.href = '/';
   });
 
-  $.ajax({
+  function GetData(token) {
+    $.ajax({
       method: 'GET',
       url: _config.api.invokeUrl+'/users',
       headers: {
         'Authorization': authToken
       },
-      contentType: 'application/json',
       success: function saved(result){
         console.log(result.data);
         if (result.data.length > 0) {
@@ -64,5 +65,7 @@ Campaigns.map = Campaigns.map || {};
           console.error('Error requesting: ', textStatus, ', Details: ', errorThrown);
           console.error('Response: ', jqXHR.responseText);
       }
-  });
+    });
+  }
+  
 }(jQuery));
