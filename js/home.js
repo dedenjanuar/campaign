@@ -41,7 +41,7 @@ Campaigns.map = Campaigns.map || {};
       method: 'GET',
       url: _config.api.invokeUrl+'/users',
       headers: {
-        Authorization: authToken
+        'Authorization': authToken
       },
       contentType: 'application/json',
       success: function saved(result){
