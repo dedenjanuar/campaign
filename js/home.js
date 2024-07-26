@@ -12,11 +12,12 @@ Campaigns.map = Campaigns.map || {};
   };
 
   var userPool;
+  var firstPage = [];
+  var NextPageIndex = 0;
 
   if (!(_config.cognito.userPoolId &&
         _config.cognito.userPoolClientId &&
         _config.cognito.region)) {
-        $('#noCognitoMessage').show();
         return;
   }
 
@@ -29,7 +30,7 @@ Campaigns.map = Campaigns.map || {};
   Campaigns.authToken.then(function setAuthToken(token) {
       if (token) {
           authToken = token;
-          GetData(authToken);
+          GetData(authToken, "");
       } else {
           window.location.href = '/';
       }
@@ -38,18 +39,27 @@ Campaigns.map = Campaigns.map || {};
       window.location.href = '/';
   });
 
-  function GetData(token) {
+  function GetData(token, lastKey) {
+    // var nextPage;
+    var data = {};
+    data.Limit = 5;
+    if(lastKey) {
+      data.StartKey = lastKey
+    }
+    console.log(data);
     $.ajax({
       method: 'GET',
-      url: _config.api.invokeUrl+'/users',
+      url: _config.api.invokeUrl+"/users",
       headers: {
         'Authorization': authToken
       },
+      data: data,
       success: function saved(result){
         console.log(result.data);
         if (result.data.length > 0) {
 
           var temp = "";
+          var nav = "";
           result.data.forEach((itemData) => {
             temp += "<tr>";
             temp += "<td>" + itemData.UserId + "</td>";
@@ -58,6 +68,14 @@ Campaigns.map = Campaigns.map || {};
             temp += "<td>" + itemData.Email + "</td>";
             temp += "<td>" + new Date(itemData.CreatedOn).toLocaleString() + "</td></tr>";
           });
+
+          if(result.lastKey){
+            $("#next-page").attr('data-id', result.lastKey.UserId);
+            
+          }
+          $("#prev-page").attr('data-id', result.data[0].UserId);
+          firstPage.push(result.data[0].UserId)
+
           document.getElementById('data').innerHTML = temp;
         }
       },
@@ -67,5 +85,20 @@ Campaigns.map = Campaigns.map || {};
       }
     });
   }
+
+  $(function onDocReady() {
+    $('#next-page').click(function(){
+      var next = $("#next-page").attr("data-id");
+      console.log(firstPage);
+      GetData(authToken, next);
+      NextPageIndex = NextPageIndex - 1;
+    });
+
+    $('#prev-page').click(function(){
+      var prev = $("#prev-page").attr("data-id");
+      console.log(firstPage);
+      GetData(authToken, firstPage[NextPageIndex]);
+    });
+  });
   
 }(jQuery));
