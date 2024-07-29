@@ -42,7 +42,7 @@ Campaigns.map = Campaigns.map || {};
   function GetData(token, lastKey) {
     // var nextPage;
     var data = {};
-    data.Limit = 5;
+    data.Limit = 50;
     if(lastKey) {
       data.StartKey = lastKey
     }
