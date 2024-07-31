@@ -39,10 +39,10 @@ Campaigns.map = Campaigns.map || {};
       window.location.href = '/';
   });
 
-  function GetData(token, lastKey) {
+  function GetData(token, lastKey, isPrev) {
     // var nextPage;
     var data = {};
-    data.Limit = 5;
+    data.Limit = 1000;
     if(lastKey) {
       data.StartKey = lastKey
     }
@@ -55,7 +55,7 @@ Campaigns.map = Campaigns.map || {};
       },
       data: data,
       success: function saved(result){
-        console.log(result.data);
+        // console.log(result.data);
         if (result.data.length > 0) {
 
           var temp = "";
@@ -69,14 +69,38 @@ Campaigns.map = Campaigns.map || {};
             temp += "<td>" + new Date(itemData.CreatedOn).toLocaleString() + "</td></tr>";
           });
 
-          if(result.lastKey){
-            $("#next-page").attr('data-id', result.lastKey.UserId);
+          // if(NextPageIndex == 0){
+          //   $('#prev-page').attr('style', 'display:none;');
+          // }else{
+          //   $('#prev-page').attr('style', 'display:block;');
+          // }
+
+          // if(result.lastKey){
+          //   $("#next-page").attr('data-id', result.lastKey.UserId);
             
-          }
-          $("#prev-page").attr('data-id', result.data[0].UserId);
-          firstPage.push(result.data[0].UserId)
+          //   firstPage[NextPageIndex] = result.data[0].UserId
+
+          //   if(isPrev){
+
+          //   }else{
+          //     NextPageIndex = NextPageIndex + 1;
+          //   }
+          //   $('#next-page').attr('style', 'display:block;');
+            
+          // }else{
+          //   $('#next-page').attr('style', 'display:none;');
+          // }
+
+          // $("#prev-page").attr('data-id', firstPage[NextPageIndex]);
+
+          // console.log(NextPageIndex);
+          // console.log(firstPage);
+
+          // firstPage = uniq(firstPage);
 
           document.getElementById('data').innerHTML = temp;
+
+          new DataTable('#data-table');
         }
       },
       error: function ajaxError(jqXHR, textStatus, errorThrown) {
@@ -86,19 +110,27 @@ Campaigns.map = Campaigns.map || {};
     });
   }
 
-  $(function onDocReady() {
-    $('#next-page').click(function(){
-      var next = $("#next-page").attr("data-id");
-      console.log(firstPage);
-      GetData(authToken, next);
-      NextPageIndex = NextPageIndex - 1;
-    });
+  function uniq(arr) {
+    var a = [];
+      for (var i=0, l=arr.length; i<l; i++)
+          if (a.indexOf(arr[i]) === -1 && arr[i] !== '')
+              a.push(arr[i]);
+      return a;
+  }
 
-    $('#prev-page').click(function(){
-      var prev = $("#prev-page").attr("data-id");
-      console.log(firstPage);
-      GetData(authToken, firstPage[NextPageIndex]);
-    });
+  $(function onDocReady() {
+    // $('#next-page').click(function(){
+    //   var next = $("#next-page").attr("data-id");
+    //   // console.log(firstPage);
+    //   GetData(authToken, next, false);
+    //   NextPageIndex = NextPageIndex + 1;
+    // });
+
+    // $('#prev-page').click(function(){
+    //   var prev = $("#prev-page").attr("data-id");
+    //   // console.log(firstPage);
+    //   GetData(authToken, (firstPage.length - 1), true);
+    // });
   });
   
 }(jQuery));
