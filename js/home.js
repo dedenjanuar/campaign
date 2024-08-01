@@ -100,7 +100,9 @@ Campaigns.map = Campaigns.map || {};
 
           document.getElementById('data').innerHTML = temp;
 
-          new DataTable('#data-table');
+          new DataTable('#data-table',{
+            order: [[4, 'desc']]
+          });
         }
       },
       error: function ajaxError(jqXHR, textStatus, errorThrown) {
